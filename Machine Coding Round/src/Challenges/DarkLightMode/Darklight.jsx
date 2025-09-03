@@ -1,11 +1,24 @@
-import React, { useContext } from "react";
 import { IoMoonSharp } from "react-icons/io5";
 import { CiSun } from "react-icons/ci";
-import { ThemeContext } from "./Themeprovider";
+import { useEffect, useState } from "react";
+
 
 
 export const Darklight = () => {
-    const {theme, handleButtonToggle} = useContext(ThemeContext);
+    const [theme, setTheme] = useState(()=>{
+        return localStorage.getItem("AppTheme") || "light";
+    });
+
+       const handleButtonToggle = ()=>{
+       setTheme((prev)=> prev==='light' ? "dark" : "light");
+   }
+
+
+    // Saving the theme to localStorage whenever it changes
+    useEffect(()=>{
+       localStorage.setItem("AppTheme", theme);
+    },[theme]);
+
   return (
     <div className={`min-h-screen ${theme==='light' ? "bg-gray-100" : "bg-black"}`}>
       <nav className={`w-full h-20 ${theme==="light" ? "bg-white" : "bg-black"} flex items-center justify-between`}>
