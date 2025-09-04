@@ -1,9 +1,9 @@
 import React from "react";
-import { Darklight } from "./Challenges/DarkLightMode/Darklight";
+import { Accordion } from "./Challenges/Accordion/Accordion";
 
 const App = () => {
   return (
-      <Darklight />
+    <Accordion/>
   );
 };
 
