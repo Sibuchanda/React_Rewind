@@ -33,7 +33,7 @@ const taskReducer = (state=initialState, action )=>{
 
 
 
-const store = createStore(taskReducer);
+export const store = createStore(taskReducer);
 console.log(store);
 console.log("Initial state is : ", store.getState());
 
@@ -47,7 +47,14 @@ const addTask = (data)=>{
 store.dispatch({type: ADD_TASK, payload: "Buy banana from market"});
 //Adding data using 'action creators' this is more convenient then the above method
 store.dispatch(addTask("Buy apple from the market"));
-console.log("Updated state is : ", store.getState());
+store.dispatch(addTask("Buy Tea from the market"));
+store.dispatch(addTask("Buy grapes from the market"));
+// console.log("Updated state is : ", store.getState());
 
-store.dispatch({type: DELETE_TASK, payload: 0});  // We passed 0 to delete 0 index data from the task array
-console.log("After Delete state is : ", store.getState());
+// store.dispatch({type: DELETE_TASK, payload: 0});  // We passed 0 to delete 0 index data from the task array
+// console.log("After Delete state is : ", store.getState());
+
+
+
+
+

@@ -1,12 +1,8 @@
 import React, { useState } from "react";
-
+import Todo  from "./todo/Todo";
 
 const App = () => {
-  return (
-    <>
-     <h1> Hello Redux</h1>
-    </>
-  );
+ return <Todo/>
 };
 
 export default App;
