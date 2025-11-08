@@ -1,10 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { Plus, Trash2 } from "lucide-react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addTask, deleteTask } from "../redux/store";
 
 const Todo = () => {
+  const [data, setData] = useState("");
   const tasks = useSelector((state) => state.task);
-  console.log(tasks);
+  
+  const dispatch = useDispatch();
+
+  const handleFormSubmit = (e)=>{
+    e.preventDefault();
+    dispatch(addTask(data));
+    return setData("");
+    
+  }
+
+  const handleDeleteButton=(id)=>{
+      return dispatch(deleteTask(id));
+  }
+
+
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-amber-100 to-orange-200 flex justify-center items-center py-10">
@@ -14,11 +30,13 @@ const Todo = () => {
         </h1>
 
         {/* Add Task Input */}
-        <form className="flex items-center gap-3 mb-6">
+        <form className="flex items-center gap-3 mb-6" onSubmit={handleFormSubmit}>
           <input
             type="text"
             id="input-box"
             placeholder="Add a new task..."
+            value={data}
+            onChange={(e)=>setData(e.target.value)}
             className="flex-1 border border-gray-400 p-3 rounded-lg text-gray-700 focus:border-blue-500 focus:outline-none"
           />
           <button
@@ -42,7 +60,7 @@ const Todo = () => {
               </span>
 
               {/* Delete Button (no functionality yet) */}
-              <button className="text-red-500 hover:text-red-600 cursor-pointer">
+              <button className="text-red-500 hover:text-red-600 cursor-pointer" onClick={()=>handleDeleteButton(index)}>
                 <Trash2 size={20} />
               </button>
             </li>
