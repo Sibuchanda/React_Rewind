@@ -1,7 +1,9 @@
-import {createStore} from 'redux'; 
+import {createStore, applyMiddleware } from 'redux'; 
+import {thunk} from 'redux-thunk';
 
 const ADD_TASK = "task/add";
 const DELETE_TASK = "task/delete";
+const FETCH_TASK = "task/fetch";
 
 const initialState = {
     task: [],
@@ -25,6 +27,11 @@ const taskReducer = (state=initialState, action )=>{
                 ...state,
                 task: updatedTask,
              };
+        case FETCH_TASK:
+            return{
+                ...state,
+                task:[...state.task, ...action.payload]
+            };
 
         default: 
           return state;
@@ -33,7 +40,7 @@ const taskReducer = (state=initialState, action )=>{
 
 
 
-export const store = createStore(taskReducer);
+export const store = createStore(taskReducer, applyMiddleware(thunk));
 // console.log(store);
 // console.log("Initial state is : ", store.getState());
 
@@ -45,6 +52,21 @@ export const addTask = (data)=>{
 
 export const deleteTask = (data)=>{
     return {type: DELETE_TASK, payload: data}
+}
+
+export const fetchTask = ()=>{
+    return async(dispatch)=>{
+      try{
+        const res = await fetch('https://jsonplaceholder.typicode.com/todos?_limit=4');
+        const task = await res.json();
+        console.log(task);
+        dispatch({type: FETCH_TASK, payload: task.map((currTask)=>{
+            return currTask.title
+        })})
+      }catch(err){
+        console.log(err);
+      }
+    }
 }
 
 // Now we want to add any data into the store. For that we have to call the dispatch method

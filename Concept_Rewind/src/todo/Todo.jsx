@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Plus, Trash2 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import { addTask, deleteTask } from "../redux/store";
+import { addTask, deleteTask, fetchTask } from "../redux/store";
 
 const Todo = () => {
   const [data, setData] = useState("");
@@ -18,6 +18,10 @@ const Todo = () => {
 
   const handleDeleteButton=(id)=>{
       return dispatch(deleteTask(id));
+  }
+
+  const handleFetchTasks = ()=>{
+    return dispatch(fetchTask());
   }
 
 
@@ -45,6 +49,14 @@ const Todo = () => {
           >
             <Plus size={20} />
             Add
+          </button>
+          <button
+            type="submit"
+            onClick={handleFetchTasks}
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center gap-1 transition"
+          >
+            <Plus size={20} />
+            Fetch task
           </button>
         </form>
 
