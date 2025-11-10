@@ -38,15 +38,23 @@ const taskReducer = (state=initialState, action )=>{
 };
 
 // ----------- RTK Slice ---------
-createSlice({
+export const taskReducer2 = createSlice({
     name: "task",
     initialState: initialState,
     reducers:{
-        addTask(state, action){},
-        deleteTask(state, action){},
+        addTask(state, action){
+            state.task.push(action.payload);
+            // state.task = [...state.task, action.payload]
+        },
+        deleteTask(state, action){
+            state.task = state.task.filter((currTask, index)=>{
+                index!==action.payload
+            })
+        },
     }
+});
 
-})
+const { addTask, deleteTask } = taskReducer2.actions;
 
 
 // ----------- Old way to create store ----------
@@ -57,19 +65,11 @@ createSlice({
 // ----------- New way to create store ----------
 export const store = configureStore({
     reducer:{
-        // taskReducer: taskReducer,    ---> As both {key,value} are same that is why, we can write simply
-        taskReducer,
+        taskReducer: taskReducer.reducer,
     }
 })
+// console.log(store.getState());
 
-// Action creators
-export const addTask = (data)=>{
-    return {type: ADD_TASK, payload: data};
-}
-
-export const deleteTask = (data)=>{
-    return {type: DELETE_TASK, payload: data}
-}
 
 export const fetchTask = ()=>{
     return async(dispatch)=>{
@@ -85,6 +85,8 @@ export const fetchTask = ()=>{
       }
     }
 }
+
+
 
 
 
