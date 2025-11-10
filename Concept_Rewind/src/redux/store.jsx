@@ -1,4 +1,4 @@
-import {configureStore} from "@reduxjs/toolkit"
+import {configureStore, createSlice} from "@reduxjs/toolkit"
 
 const ADD_TASK = "task/add";
 const DELETE_TASK = "task/delete";
@@ -36,6 +36,17 @@ const taskReducer = (state=initialState, action )=>{
           return state;
     }
 };
+
+// ----------- RTK Slice ---------
+createSlice({
+    name: "task",
+    initialState: initialState,
+    reducers:{
+        addTask(state, action){},
+        deleteTask(state, action){},
+    }
+
+})
 
 
 // ----------- Old way to create store ----------
