@@ -1,5 +1,4 @@
-import {createStore, applyMiddleware } from 'redux'; 
-import {thunk} from 'redux-thunk';
+import {configureStore} from "@reduxjs/toolkit"
 
 const ADD_TASK = "task/add";
 const DELETE_TASK = "task/delete";
@@ -39,11 +38,18 @@ const taskReducer = (state=initialState, action )=>{
 };
 
 
-
-export const store = createStore(taskReducer, applyMiddleware(thunk));
+// ----------- Old way to create store ----------
+// export const store = createStore(taskReducer, applyMiddleware(thunk));
 // console.log(store);
 // console.log("Initial state is : ", store.getState());
 
+// ----------- New way to create store ----------
+export const store = configureStore({
+    reducer:{
+        // taskReducer: taskReducer,    ---> As both {key,value} are same that is why, we can write simply
+        taskReducer,
+    }
+})
 
 // Action creators
 export const addTask = (data)=>{
@@ -69,16 +75,7 @@ export const fetchTask = ()=>{
     }
 }
 
-// Now we want to add any data into the store. For that we have to call the dispatch method
-// store.dispatch({type: ADD_TASK, payload: "Buy banana from market"});
-//Adding data using 'action creators' this is more convenient then the above method
-// store.dispatch(addTask("Buy apple from the market"));
-// store.dispatch(addTask("Buy Tea from the market"));
-// store.dispatch(addTask("Buy grapes from the market"));
-// console.log("Updated state is : ", store.getState());
 
-// store.dispatch({type: DELETE_TASK, payload: 0});  // We passed 0 to delete 0 index data from the task array
-// console.log("After Delete state is : ", store.getState());
 
 
 

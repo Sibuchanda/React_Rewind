@@ -5,7 +5,7 @@ import { addTask, deleteTask, fetchTask } from "../redux/store";
 
 const Todo = () => {
   const [data, setData] = useState("");
-  const tasks = useSelector((state) => state.task);
+  const tasks = useSelector((state) => state.taskReducer.task);
   
   const dispatch = useDispatch();
 
