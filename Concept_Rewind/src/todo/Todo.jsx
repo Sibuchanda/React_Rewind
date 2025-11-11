@@ -1,30 +1,31 @@
 import React, { useState } from "react";
 import { Plus, Trash2 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import { addTask, deleteTask, fetchTask } from "../redux/store";
+import { addTask, deleteAllTaks, deleteTask, fetchTask } from "../redux/store";
 
 const Todo = () => {
   const [data, setData] = useState("");
   const tasks = useSelector((state) => state.taskReducer.task);
-  
+
   const dispatch = useDispatch();
 
-  const handleFormSubmit = (e)=>{
+  const handleFormSubmit = (e) => {
     e.preventDefault();
     dispatch(addTask(data));
     return setData("");
-    
-  }
+  };
 
-  const handleDeleteButton=(id)=>{
-      return dispatch(deleteTask(id));
-  }
+  const handleDeleteButton = (id) => {
+    return dispatch(deleteTask(id));
+  };
 
-  const handleFetchTasks = ()=>{
+  const handleFetchTasks = () => {
     return dispatch(fetchTask());
-  }
+  };
 
-
+  const handleDeleteAllTasks = () => {
+    return dispatch(deleteAllTaks());
+  };
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-amber-100 to-orange-200 flex justify-center items-center py-10">
@@ -34,13 +35,16 @@ const Todo = () => {
         </h1>
 
         {/* Add Task Input */}
-        <form className="flex items-center gap-3 mb-6" onSubmit={handleFormSubmit}>
+        <form
+          className="flex items-center gap-3 mb-6"
+          onSubmit={handleFormSubmit}
+        >
           <input
             type="text"
             id="input-box"
             placeholder="Add a new task..."
             value={data}
-            onChange={(e)=>setData(e.target.value)}
+            onChange={(e) => setData(e.target.value)}
             className="flex-1 border border-gray-400 p-3 rounded-lg text-gray-700 focus:border-blue-500 focus:outline-none"
           />
           <button
@@ -72,12 +76,23 @@ const Todo = () => {
               </span>
 
               {/* Delete Button (no functionality yet) */}
-              <button className="text-red-500 hover:text-red-600 cursor-pointer" onClick={()=>handleDeleteButton(index)}>
+              <button
+                className="text-red-500 hover:text-red-600 cursor-pointer"
+                onClick={() => handleDeleteButton(index)}
+              >
                 <Trash2 size={20} />
               </button>
             </li>
           ))}
         </ul>
+        <button
+          type="submit"
+          onClick={handleDeleteAllTasks}
+          className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg flex items-center gap-1 transition"
+        >
+          <Plus size={20} />
+          Delete All
+        </button>
       </div>
     </div>
   );
